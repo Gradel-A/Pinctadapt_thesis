@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+#PBS -q mpi_1
+#PBS -l walltime=36:00:00
+#PBS -l mem=120gb
+
+
