@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#PBS -q sequentiel
+#PBS -l mem=2g
+#PBS -l walltime=01:00:00
+
+# ##################################################################
+# BEGIN: Data to process
+#        edit this part as needed to handle YOUR Fasta files!
+
+# FASTA file to cut into smaller slices
+WORKDIR="/home1/datawork/agradel/pinctadapt/genome"
+DATAFILE="Pinctada_margaritifera_genome_v2.fna"
+
+# slice size ; unit: nb sequences
+SLICESIZE=25
+
+# END: Data to process
+# ###################################################################
+
+# do some file naming stuffs
+filename=$(basename -- "$DATAFILE")
+extension="${filename##*.}"
+filename="${filename%.*}"
+
+# Prepare a TIME specific format string
+export TIME="U=%U;S=%S;E=%E;P=%P;M=%M;K=%K;F=%F;W=%W;I=%I;O=%O"
+TIMEFNAME=${WORKDIR}/cut-${filename}.time
+
+# Load JAVA environment requested by PLAST
+. /etc/profile.d/modules.sh 
+module load java/1.8.0_121
+
+# Set cut command to use
+CUTTOOL="/appli/bioinfo/beedeem-tools/2.0.0/cut.sh"
+
+# Prepare cut command
+CMD="/usr/bin/time -o $TIMEFNAME --format='$TIME' $CUTTOOL -w $WORKDIR -i $WORKDIR/$DATAFILE -p $SLICESIZE"
+# dump cmd to be executed in PBS log for this job
+echo $CMD
+
+# run command
+eval $CMD
