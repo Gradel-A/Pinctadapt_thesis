@@ -12,7 +12,7 @@ matrice_temp <- matrice[,-(11:14)]
 pairs.panels(matrice[,-(1:2)], scale = FALSE, method = "pearson")
 #plotting the acp with individuals and also variables
 
-res.pca <- PCA(matrice[,-(1:2)], graph =FALSE)
+res.pca <- PCA(matrice[,-(1:2)], graph =FALSE) #by default this function scale the variables to variance unit to change: scale.unit=FALSE
 
 #first look to number of dimension to keep
 fviz_eig(res.pca, addlabels = TRUE, ylim = c(0, 50))
