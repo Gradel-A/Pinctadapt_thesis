@@ -1,5 +1,6 @@
 library(adegenet)
 library(dartR)
+library(ggplot2)
 
 #take the file and the good format
 setwd("~/Downloads/test_run/")
