@@ -2,9 +2,9 @@ import os
 import dadi
 import matplotlib.pyplot as plt
 
-os.chdir("/Users/antoinegradel/Desktop/pinctadapt")
-vcf = "Puce_ADN_289inds_10kSNPs_max10missing.vcf.recode.vcf"
-popfile = "metadata_marq.txt"
+os.chdir("/Users/antoinegradel/Desktop/pinctadapt/données_puce")
+vcf = "chip_pinctadapt_data_cleaned.vcf"
+popfile = "map_file_copie.txt"
 #marquises 30
 #takaroa 103
 #Ahe 50
@@ -12,7 +12,7 @@ popfile = "metadata_marq.txt"
 #Raroia 35
 #Japan 7
 #indo 39
-pop_ids, ns = ['Marquesas', 'Japan'], [10,10] #hear you have to choose the population to compare
+pop_ids, ns = ['Tuamotus', 'Gambier'], [200,200] #hear you have to choose the population to compare
 #but also the projection of individuals to minimize the computation time
 #it's better to choose the number near the little pop
 dd = dadi.Misc.make_data_dict_vcf(vcf, popfile)
