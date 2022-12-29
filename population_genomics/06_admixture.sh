@@ -17,7 +17,7 @@ NCPU=28
 mkdir -p $DATAOUTPUT
 
 # first we will transforme the vcf file into the bed format require by admixture
-$PLINK --vcf $DATAINPUT/chip_pinctadapt_data_cleaned.vcf --make-bed --out $DATAINPUT/chip_pinctadapt_data_cleaned
+/appli/bioinfo/plink/1.9/plink --allow-extra-chr --vcf $DATAINPUT/chip_pinctadapt_data_cleaned.vcf --make-bed --out $DATAINPUT/chip_pinctadapt_data_cleaned
 
 # Now perform the analyses from k=1 to k=10 with statistiques implement in the software
 $ADMIXTURENV
