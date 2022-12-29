@@ -7,8 +7,8 @@
 #PBS -o $DATAWORK/pinctadapt/98_log_files/admixture.txt
 
 #Global variables
-DATADIRECTORY=$DATAWORK/pinctadapt
-DATAINPUT=$DATADIRECTORY/population_genetic/02_data
+DATADIRECTORY=$DATAWORK/population_genetic
+DATAINPUT=$DATADIRECTORY/02_data
 DATAOUTPUT=$SCRATCH/population_genetic/admixture
 ADMIXTURENV=". /appli/bioinfo/admixture/1.3.0/env.sh"
 PLINK="/appli/bioinfo/plink/1.9/plink"
