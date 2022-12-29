@@ -4,7 +4,7 @@
 #PBS -l ncpus=28
 #PBS -l mem=60gb
 #PBS -l walltime=48:00:00
-#PBS -o $DATAWORK/pinctadapt/98_log_files/admixture.txt
+#PBS -o /home1/datawork/agradel/population_genetic/98_log_files/admixture.log
 
 #Global variables
 DATADIRECTORY=$DATAWORK/population_genetic
