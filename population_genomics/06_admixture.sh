@@ -40,4 +40,9 @@ admixture --cv --seed=50 $DATAINPUT/chip_pinctadapt_data_cleaned.bed 8 -j28 | te
 admixture --cv --seed=50 $DATAINPUT/chip_pinctadapt_data_cleaned.bed 9 -j28 | tee log_9.log
 admixture --cv --seed=50 $DATAINPUT/chip_pinctadapt_data_cleaned.bed 10 -j28 | tee log_10.log
 
+#create a file to estimate the good k value to choose for our dataset
+grep ^"CV" log* > CV_summary.log
+
+#code for Rscript analyses perform on computer after wih the output:
+#Rscript plotADMIXTURE.r -p chip_pinctadapt_data_cleaned -i tmp.list.txt -k 5 -l RVV,SCI,MOP,MarSud,MOR,GMBW,WC1,WC2,WC3,AHE,ANA,ARA,KAT,KAU,MAN,MOT,RAR,TAH,TAK,TEA,TKP,UAH,MP,MG
 
