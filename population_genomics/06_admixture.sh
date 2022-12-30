@@ -44,5 +44,5 @@ admixture --cv --seed=50 $DATAINPUT/chip_pinctadapt_data_cleaned.bed 10 -j28 | t
 grep ^"CV" log* > CV_summary.log
 
 #code for Rscript analyses perform on computer after wih the output:
-#Rscript plotADMIXTURE.r -p chip_pinctadapt_data_cleaned -i tmp.list.txt -k 5 -l RVV,SCI,MOP,MarSud,MOR,GMBW,WC1,WC2,WC3,AHE,ANA,ARA,KAT,KAU,MAN,MOT,RAR,TAH,TAK,TEA,TKP,UAH,MP,MG
+#Rscript plotADMIXTURE.r -p chip_pinctadapt_data_cleaned -i tmp.list.txt -k 5 -l MarSud,GMBW,WC1,WC2,WC3,MOR,AHE,ANA,ARA,KAT,KAU,MAN,MOT,RAR,TAH,TAK,TEA,TKP,RVV,MOP,SCI,UAH,MG,MP
 
