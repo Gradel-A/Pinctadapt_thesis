@@ -11,7 +11,7 @@ library(dartR)
 library(vegan)
 library(psych)
 
-#### create a function ####
+#### create a function which permit to detect the outliers by the normal data distribution####
 
 outliers <- function(x,z){
   lims <- mean(x) + c(-1, 1) * z * sd(x)     # find loadings +/-z sd from mean loading     
@@ -30,7 +30,7 @@ data$ind.names <- as.character(metadata$INDIVIDUALS)
 #data$other$long <- metadata$long
 #...
 
-#preparing the data and imput the mssing data
+#preparing the data and imput the missing data
 geno<-gl2gi(data)
 geno.imput <- apply(geno@tab, 2, function(x) replace(x, is.na(x), as.numeric(names(which.max(table(x))))))
 sum(is.na(geno.imput))
@@ -48,13 +48,16 @@ Env_test <- select(environment_conditions, population)
 temp.rda.mod0 <- rda(geno.imput~1, Env_test)
 temp.rda.mod1 <- rda(geno.imput~., Env_test)
 
+# after creating the models we do a selection to keep only the variables realy important in explaining the genetic
+# we can also and prefering use ordistep
 rda.ord <- ordiR2step(temp.rda.mod0, temp.rda.mod1, direction = "forward")
-vif.cca(rda.ord)
+vif.cca(rda.ord) #permit to take back the AICs and p-values and all important information
 RsquareAdj(rda.ord)
 rda.ord
 screeplot(rda.ord)
 
 #### plot the RDA ####
+# we choose to do a representation first of the individuals as sites and environnemental conditions as vectors
 bg <- c("orange","purple","grey","#a6cee3","blue","red","light green","green")
 plot(rda.ord, scaling =3, choices = c(1,2))
 points(rda.ord, display="sites", pch=21, cex=1.3, col="gray32", scaling=3,choices = c(1,2), bg=bg[geno@pop])
@@ -64,9 +67,13 @@ plot(rda.ord, scaling =3, choices = c(1,3))
 points(rda.ord, display="sites", pch=21, cex=1.3, col="gray32", scaling=3,choices = c(1,3), bg=bg[geno@pop])
 legend("bottomright", legend=levels(geno@pop), bty="n", col="gray32", pch=21, cex=1, pt.bg=bg)
 
-####ectract the outliers ####
+#graphically we can estimte the impact of variables in all pc axes and so link the outliers of each of them to a special condition
+
+####extract the outliers ####
 load.rda <- scores(rda.ord, choices=c(1:3), display="species")
 
+#no we can use our function to extract the SNPs which derived from the normal distribution and so considered as outliers
+ 
 hist(load.rda[,1], main="Loadings on RDA1") #plotting the histogramme of the outliers values
 hist(load.rda[,2], main="Loadings on RDA2")
 hist(load.rda[,3], main="Loadings on RDA3") 
@@ -113,6 +120,8 @@ for (i in 1:length(cand$snp)) {
   foo[i,] <- apply(as.data.frame(as.numeric(Env_test$population)),2,function(x) cor(x,snp.gen))
 }
 
+#now we can merge the table of all outliers and remove the duplicates
+                   
 cand.predic.dup <- cbind.data.frame(cand,foo)  
 cand.predic.sep <- separate(cand.predic.dup ,col =  snp,  into = c("index", "snp", "base"))
 cand.predic.uni <- unite(cand.predic.sep , index:snp, col = "snp", sep = "-")
