@@ -1,3 +1,7 @@
+###########
+#author: AO GRADEL
+##########
+
 #### introduce the packages and set the working directory
 
 library(tidyverse)
