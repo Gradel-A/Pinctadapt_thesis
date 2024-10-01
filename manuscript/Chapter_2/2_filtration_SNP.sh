@@ -1,12 +1,12 @@
 #!/usr/bin/bash
 
 #declare variables used in the script
-DATADIRECTORY=/home1/datawork/agradel/demographic_chapter
+DATADIRECTORY=emographic_chapter
 SCRIPT=$DATADIRECTORY/00_scripts/wall_genome/snp-depth
 HEADER=$DATADIRECTORY/00_scripts/headerP.txt
-VCFLIB=". /appli/bioinfo/vcflib/1.0.0_rc1/env.sh"
-BCFTOOLS=". /appli/bioinfo/bcftools/1.17/env.sh"
-DATAOUTPUT=/home1/scratch/agradel/wall_genome_vcf/vcfilter
+VCFLIB=". /vcflib/1.0.0_rc1/env.sh"
+BCFTOOLS=". /bcftools/1.17/env.sh"
+DATAOUTPUT=/vcfilter
 
 #create the output files
 mkdir -p $SCRIPT
@@ -17,10 +17,10 @@ DPMAX="DP < 150"
 TYPE="TYPE = snp"
 
 #go to the folder containing the data in your project folder
-ls -d /home1/scratch/agradel/wall_genome_vcf/ind_selected* > /home1/scratch/agradel/wall_genome_vcf/vcfilter_file.txt
+ls -d /ind_selected* > /vcfilter_file.txt
 
 #list the file to filter
-NAME='cat /home1/scratch/agradel/wall_genome_vcf/vcfilter_file.txt'
+NAME='cat /vcfilter_file.txt'
 
 #start the loop creating individual scripts for each VCF files located in the data folder
 for FILE in $($NAME) #list all the files with the fna extension and store it in the variable FILE
