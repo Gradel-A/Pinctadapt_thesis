@@ -579,11 +579,3 @@ admixture_PF <- ggarrange(K1_PF,K2_PF,K3_PF, ncol = 1, nrow = 3, labels = c("K=1
 admixture_PF
 ```
 
-
-## Demographic Analyses perform on datarmor Summary
-
-To understand the establishment of the structure we found in our analyses we decided to do some demographc approches with f3 statistics. This value indicate if in 3 population model one of them is the results of admixture betwenn the two others. Below you have the output generate by treepop. It indicate that Polynesia cluster is the results of admixture between Indonesian and Marquesian clusters.
-
-In addition we ask to the software to generate some tree representation of the pathways used to create the populations and subpopulations. But there is no consensus between them actually and I will perform further analyses by creating pseudo-populations which are representative of the clustering gives by find.cluster() function and also admixture.
-
-
