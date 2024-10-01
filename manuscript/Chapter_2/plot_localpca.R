@@ -41,6 +41,7 @@ data_ggplot.pol$pos <-as.numeric(data_ggplot.pol$pos)
 lims.MG <- outliers.lim(data_ggplot.MG$pos, 1.96)
 lims.MS <- outliers.lim(data_ggplot.MS$pos, 1.96)
 lims.MT <- outliers.lim(data_ggplot.MT$pos, 1.96)
+lims.pol <- outliers.lim(data_ggplot.pol$pos, 1.96)
 
 data_ggplot.MG$outliers <- rep(FALSE, nrow(data_ggplot.MG))
 data_ggplot.MS$outliers <- rep(FALSE, nrow(data_ggplot.MS))
@@ -50,15 +51,17 @@ data_ggplot.pol$outliers <- rep(FALSE, nrow(data_ggplot.pol))
 data_ggplot.MG$outliers[data_ggplot.MG$pos < lims.MG[1] | data_ggplot.MG$pos > lims.MG[2]] <- 0.05
 data_ggplot.MS$outliers[data_ggplot.MS$pos < lims.MS[1] | data_ggplot.MS$pos > lims.MS[2]] <- 0.05
 data_ggplot.MT$outliers[data_ggplot.MT$pos < lims.MT[1] | data_ggplot.MT$pos > lims.MT[2]] <- 0.05
+data_ggplot.pol$outliers[data_ggplot.pol$pos < lims.pol[1] | data_ggplot.pol$pos > lims.pol[2]] <- 0.05
 
 lims.MG <- outliers.lim(data_ggplot.MG$pos, 2.58)
 lims.MS <- outliers.lim(data_ggplot.MS$pos, 2.58)
 lims.MT <- outliers.lim(data_ggplot.MT$pos, 2.58)
+lims.pol <- outliers.lim(data_ggplot.pol$pos, 2.58)
 
 data_ggplot.MG$outliers[data_ggplot.MG$pos < lims.MG[1] | data_ggplot.MG$pos > lims.MG[2]] <- 0.01
 data_ggplot.MS$outliers[data_ggplot.MS$pos < lims.MS[1] | data_ggplot.MS$pos > lims.MS[2]] <- 0.01
 data_ggplot.MT$outliers[data_ggplot.MT$pos < lims.MT[1] | data_ggplot.MT$pos > lims.MT[2]] <- 0.01
-
+data_ggplot.pol$outliers[data_ggplot.pol$pos < lims.pol[1] | data_ggplot.pol$pos > lims.pol[2]] <- 0.01
 
 
 data_ggplot.MG$comp <- rep("Gambier", nrow(data_ggplot.MG))
@@ -115,13 +118,13 @@ ggplot()+
         axis.ticks.x = element_blank(),
         axis.text.x.bottom = element_blank(),
         legend.position = "bottom") 
+
 a <- ggplot()+
     geom_point(data = data_ggplot.MS, aes(x=as.numeric(index), y=abs(pos), fill = as.factor(chr), color = as.factor(outliers)),
             size = 3, shape = 21, stroke = 1.5)+
   scale_fill_manual(values = c(rep(c("black", "grey"),7)), )+
   scale_color_manual(values = c("white","green", "red"), name = "Significativity", labels = c("","0.01", "0.05"))+
   guides(fill=FALSE) +
-  scale_shape_manual(values = c(21,22,23), labels = c("MT" ,"MG", "MS"), name = "comparison with")+
   theme_bw()+
   xlab("SNPs window position")+
   ylab("MDS 1")+
@@ -141,12 +144,9 @@ a <- ggplot()+
 b <- ggplot()+
     geom_point(data = data_ggplot.MT, aes(x=as.numeric(index), y=abs(pos), fill = as.factor(chr), color = as.factor(outliers)),
             size = 3, shape = 21, stroke = 1.5)+
-   geom_point(data = data_ggplot.MG, aes(x=as.numeric(index), y=abs(pos),fill = as.factor(chr), color = as.factor(outliers)),
-              size = 3, shape = 22, stroke = 1.5)+
   scale_fill_manual(values = c(rep(c("black", "grey"),7)), )+
   scale_color_manual(values = c("white","green", "red"), name = "Significativity", labels = c("","0.01", "0.05"))+
   guides(fill=FALSE) +
-  scale_shape_manual(values = c(21,22,23), labels = c("MT" ,"MG", "MS"), name = "comparison with")+
   theme_bw()+
   ggtitle("Marquesas-Tuamotu")+
   ylab("MDS 1")+
@@ -165,11 +165,10 @@ b <- ggplot()+
 
 c <- ggplot()+
   geom_point(data = data_ggplot.MG, aes(x=as.numeric(index), y=abs(pos),fill = as.factor(chr), color = as.factor(outliers)),
-             size = 3, shape = 23, stroke = 1.5)+
+             size = 3, shape = 21, stroke = 1.5)+
   scale_fill_manual(values = c(rep(c("black", "grey"),7)), )+
   scale_color_manual(values = c("white","green", "red"), name = "Significativity", labels = c("","0.01", "0.05"))+
   guides(fill=FALSE) +
-  scale_shape_manual(values = c(21,22,23), labels = c("MT" ,"MG", "MS"), name = "comparison with")+
   theme_bw()+
   xlab("SNPs window position")+
   ylab("MDS 1")+
@@ -186,8 +185,31 @@ c <- ggplot()+
         axis.ticks.x = element_blank(),
         axis.text.x.bottom = element_blank(),
         legend.position = "none") 
+
+d <- ggplot()+
+  geom_point(data = data_ggplot.pol, aes(x=as.numeric(index), y=abs(pos),fill = as.factor(chr), color = as.factor(outliers)),
+             size = 3, shape = 21, stroke = 1.5)+
+  scale_fill_manual(values = c(rep(c("black", "grey"),7)), )+
+  scale_color_manual(values = c("white","green", "red"), name = "Significativity", labels = c("","0.01", "0.05"))+
+  guides(fill=FALSE) +
+  theme_bw()+
+  xlab("SNPs window position")+
+  ylab("MDS 1")+
+  ggtitle("Society-Gambier-Tuamotu")+
+  theme(axis.title=element_text(size=16, colour="black"),
+        axis.title.x=element_blank(),
+        axis.title.y=element_text(size=16, colour="black"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size=12, colour="black"),
+        plot.title = element_text(size=16, colour="black"),
+        legend.title = element_text(size=16, colour="black"),
+        legend.text = element_text(size=16, colour="black"),
+        legend.background = element_rect(fill = NA , colour = NA),
+        axis.ticks.x = element_blank(),
+        axis.text.x.bottom = element_blank(),
+        legend.position = "none") 
   
-ggarrange(a,b,c, ncol = 1)
+ggarrange(a,b,c,d, ncol = 1)
 
 model <- aov(data = data_ggplot, abs(pos)~comp)
 myhsd <- HSD.test(model, "comp", group = TRUE, alpha = 0.001)
