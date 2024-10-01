@@ -25,15 +25,12 @@ NAME='cat /vcfilter_file.txt'
 #start the loop creating individual scripts for each VCF files located in the data folder
 for FILE in $($NAME) #list all the files with the fna extension and store it in the variable FILE
 do
-        cp $HEADER $SCRIPT/snp-depth_${FILE##*/}.sh ; # copy the header file in a new script file called snp-depth_{genome_part}.sh
-        echo "#PBS -N snp-depth_${FILE##*/}" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "#PBS -o $DATADIRECTORY/98_log_files/0_2_snp-depth_${FILE##*/}.log" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "$BCFTOOLS" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "cd /home1/scratch/agradel/wall_genome_vcf" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "bcftools view ${FILE} -m2 -M2 -v snps --threads 25 -O v -o ${FILE##*/}.vcf" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "$VCFLIB" >> $SCRIPT/snp-depth_${FILE##*/}.sh;
-        echo "cd $DATAOUTPUT" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "vcffilter -g \"$DPMIN\" -g \"$DPMAX\" /home1/scratch/agradel/wall_genome_vcf/${FILE##*/}.vcf &> $DATAOUTPUT/snp-depth${FILE##*/}.vcf" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        echo "rm /home1/scratch/agradel/wall_genome_vcf/${FILE##*/}.vcf" >> $SCRIPT/snp-depth_${FILE##*/}.sh ;
-        qsub $SCRIPT/snp-depth_${FILE##*/}.sh ; # append the echoed line in the script file (here we ask to submit our script to the PBS claculation nodes for execution)
-done ; # we finish the loop 
+        cp $HEADER $SCRIPT/vcffilter_${FILE##*/}.sh ; # copy the header file in a new script file called vcffilter_{genome_part}.sh
+        echo "#PBS -N vcffilter_${FILE##*/}" >> $SCRIPT/vcffilter_${FILE##*/}.sh ;
+        echo "#PBS -o $DATADIRECTORY/98_log_files/09_vcffilter_${FILE##*/}.log" >> $SCRIPT/vcffilter_${FILE##*/}.sh ;
+        echo "cd $SCRATCH/06_freebayes/partial_bcftools" >> $SCRIPT/vcffilter_${FILE##*/}.sh ; # append the echoed line in the script file (we go to the data folder of our project)
+        echo "gzip -d ${FILE}" >> $SCRIPT/vcffilter_${FILE##*/}.sh
+        echo "$VCFLIB" >> $SCRIPT/vcffilter_${FILE##*/}.sh ; # preparing the vcftools
+        echo "vcffilter -g \"$DPMIN\" -g \"$DPMAX\" ${FILE%???}vcf &> $DATAOUTPUT/DP15_snp_${FILE##*/}.vcf" >> $SCRIPT/vcffilter_${FILE##*/}.sh ;
+        qsub $SCRIPT/vcffilter_${FILE##*/}.sh ; # append the echoed line in the script file (here we ask to submit our script to the PBS claculation nodes for execution)
+done ; # we finish the loop
