@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
 #declare variables used in the script
-DATADIRECTORY=/home1/datawork/agradel/demographic_chapter
+DATADIRECTORY=./demographic_chapter
 SCRIPT=$DATADIRECTORY/00_scripts/wall_genome/ind_selection
 HEADER=$DATADIRECTORY/00_scripts/headerS.txt
-BCFTOOLSENV=". /appli/bioinfo/bcftools/1.17/env.sh"
+BCFTOOLSENV=". /bcftools/1.17/env.sh"
 
 #create the output files
 mkdir -p $SCRIPT
@@ -12,10 +12,10 @@ mkdir -p $DATAOUTPUT
 
 #go to the folder containing the data in your project folder
 cd $SCRATCH/06_freebayes/partial_vctools
-ls -d /home/datawork-rmpf/p_margaritifera/WP2/02_differentiation/raw_vcfs/*.vcf.gz> /home1/scratch/agradel/wall_genome_vcf/ind_selection.txt
+ls -d /*.vcf.gz> /ind_selection.txt
 
 #list the file to filter
-NAME='cat /home1/scratch/agradel/wall_genome_vcf/ind_selection.txt'
+NAME='cat /ind_selection.txt'
 
 #start the loop creating individual scripts for each VCF files located in the data folder
 for FILE in $($NAME) #list all the files with the fna extension and store it in the variable FILE
