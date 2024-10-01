@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 #PBS -N admixture_art
-#PBS -q mpi_1
+#PBS -q 
 #PBS -l ncpus=28
 #PBS -l mem=60gb
 #PBS -l walltime=48:00:00
-#PBS -o /home1/datawork/agradel/population_genetic/98_log_files/admixture_art.log
+#PBS -o /98_log_files/admixture_art.log
 
 #Global variables
-DATADIRECTORY=$DATAWORK/population_genetic
+DATADIRECTORY=./population_genetic
 DATAINPUT=$DATADIRECTORY/02_data/puce_final
 DATAOUTPUT=$SCRATCH/population_genetic/admixture
-ADMIXTURENV=". /appli/bioinfo/admixture/1.3.0/env.sh"
-PLINK="/appli/bioinfo/plink/1.9/plink"
+ADMIXTURENV=". /env.sh"
+PLINK="/plink/1.9/plink"
 NCPU=28
 
 mkdir -p $DATAOUTPUT
