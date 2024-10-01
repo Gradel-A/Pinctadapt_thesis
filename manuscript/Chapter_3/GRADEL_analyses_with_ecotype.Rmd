@@ -109,11 +109,6 @@ emm_conso <- emmeans(M3_gr, pairwise ~ Bac * Time + ecotype)
 print(summary(emm_conso))
 
 ```
-The best model which fit our data is non linear and follow a gamma distribution. the AIC of this model is better than the others. like ecotype in non significant I've tried to remove it from modelling (gr_mod2) but the impact is not significant on the modelling of the data whereas the use of gamma distribution.
-
-The model explain appreciatively 58% of the variance of the shell width and considering only the fixed effect it explains ± 44,5%.
-
-In conclusion this statistic approach allow us to determine a significant effect of the intertidal thermal condition on the growth of the individuals. Whereas the ecotype seems to have no significant impact whereas we can identify a trend on the graphs
 
 ```{r growth plotting, echo=FALSE, fig.width=15, fig.height=10}
 data_growth_restricted_clean$f_time <- data_growth_restricted_clean$Time
@@ -250,7 +245,6 @@ emm_entree <- emmeans(M3_entree, pairwise ~ date + ecotype)
 print(summary(emm_entree))
 
 ```
-Moins de consommation chez dans les conditions stressé que dans les conditions controle mais pas de différence significativeentre les écotypes
 
 ```{r  conso plot, echo=FALSE, fig.width=15, fig.height=10}
 
@@ -370,7 +364,7 @@ emm_Rr <- emmeans(M3_Rr, pairwise ~ cycle*temperature)
 print(summary(emm_Rr))
 ```
 
-the model wich look to be the best indicate a significance on the temperature but by performing the post-hoc analyses I conclude on no significant effect of the temperature of 36 on respiration flux on two days. With a p-value of 0.066 the temperature on cycle 1 have a trend but the lack of significant can be due to a lack of power due to sample replicates or the sample size compare to the volume of the respirometer chambers.
+
 
 
 ```{r respiration flux plot, echo=FALSE, fig.width=10, fig.height=7.5}
@@ -404,11 +398,7 @@ respi_raw_data$population[respi_raw_data$population == "subtidal"] <- "Subtidal"
 
 ```
 
-To conclude this part we identified a significant impact of the stress conditions on the growth of the individual without differences between the ecotypes. In the same way two days of exposition to stress condition didn't induce significant change between the ecotypes over the time. nevertheless we can a trend of less respiration on intertidal ecotype.
 
-## Telomère dynamic on juvenile expose to intertidal thermal conditions
-
-  The legnth of the telomere is a good indicator of the impact of a stressor on the DNA integrity of individuals. By extension it is also compare to the biological clock of the cell until their apoptosis.
   
 ```{r telomere data doawnload, include=FALSE}
 
@@ -524,10 +514,6 @@ ggplot(data = tel_data_clean_shape, aes(x = Time, y = rTL,
 
 ```
   
-  The modelisation indicate an evolution of the telomere length during the 6 weeks of experiment with differences between the ecotypes. The intertidal individuals have relatively longueur telomere at the beginning of the experiment compare to the subtidal. this differences is not significant at TO but it is the case compare to the middle of the experiment. In addition, the two ecotypes have a significant increase in telomere length during the second half of the experiment whereas no significant change is detected during the first 3 weeks.
-  
- We can assume that intertidal individuals have a telomerase activity that is more active at the base, hence the longer telomeres at the start of the experiment. The fact that there is a tendency for telomeres to shrink (significantly between T21 and T41) in intertidal individuals may be due to damage linked to the kinetics of setting up protective processes that were not at a basal level. The global increase of telomere length can be attribuate to the juvenile stage of the individuals. the conclusion should be different on the adults.
-  
 ## Mitochondrial metabolism in intertidal thermal challenging condition
 
 ### Intracellular mitochondrial quantity
@@ -632,9 +618,7 @@ r.squaredGLMM(M3_COI)
 
 ```
 
-  L'évolution de la quantité de mitochondrie ne semble pas avoir d'évolution significative au cours de l'expérimentation en faisant la modélisation sur le jeu de données. Même en essayant de forcer l'écotype le temps n'impacte pas significativement la quantité de mitochondrie pour l'un ou l'autre des éctoypes.
-  Ainsi pour conclure sur cette mesure je dirai que les tendances que l'ont a pu observer précedemment sur les graphisque (ci-dessous) sont du a des erreur de type 1 générer par la production rpéter de stats. De plus la forte variance dans le groupe T41 peut être à l'origine d'une perte de puissance qui est absorbé par cette hétérogénéité de mesure.
-  
+ 
 ```{r pcrCOI plotting, echo=FALSE, fig.width=15, fig.height=10}
 ggplot(data = COI_data_clean_shape, aes(x = Time, y = rCOI,
                                   color = ecotype))+
@@ -793,9 +777,6 @@ print(summary(emm_time))
 
 ```
 
-I had a random effect of the concentration of protein to the statistical modeling developed by jeremy. Indeed I would erase some bia which could be due to difference in mitochondrial quantity in the respirometry chamber. 
-
-There is no differences between the two ecotypes. In other hand there is a significant increase of the respiration after the first week. the turn over of the mitochondria could have been occur during this period.
 
 
 ```{r OXPHOS plotting, echo=FALSE, fig.width=15, fig.height=10}
@@ -921,9 +902,6 @@ respiration flux (pmol.mg-1.s-1)') +
   scale_y_continuous(breaks = c(seq(0,600,200)), limits = c(-50,750))
 plot(leak)
 ```
-there is no significance between the ecotype in the leak parameter too. there is like for the oxphos a significant increase of the leak after the first week of the experiment. there is a trend of decrease between T0 and T7 but it is not significant (p-value =0.0571). 
-
-  Oxpkos and leak follow the same trend during the first week with a decrease (not significant) and them a return to a basal level at the middle and the end of the experiment. We will know check the rcr (respiratory control ratio).
   
 
 ####RCR: Respiratory Control Ratio
@@ -1012,7 +990,6 @@ RCR <- ggplot(data = o2k_data_36_clean, aes(x = f_time, y =  X36_RCR,
         legend.background = element_rect(fill = NA , colour = NA))
 
 ```
-  there is significant post hoc test comparison. In addition the modelisation are not well fit to the data and generate some deviation to normal distribution even if we test in other type of distribution model.
   
 ####Oxce: effect of olygomycin
 ```{r Oxce statistic}
@@ -1069,8 +1046,7 @@ summary(M3_oxce)
 emm_time <- emmeans(M3_oxce, pairwise ~ f_time)
 print(summary(emm_time))
 ```
-  on observe une amélioration a T7 mais pas significatife sur le summary juste en post-hoc entre T7 et T21 /T42
-
+ 
 ```{r oxce plotting, echo=FALSE, fig.width=15, fig.height=10}
 
 oxce <- ggplot(data = o2k_data_36_clean, aes(x = f_time, y =  Oxce_36))+
@@ -1205,9 +1181,6 @@ plot(LEAK_delta)
   
 #### delta OXPHOS / delta RCR
 
-I've some issues on the modelling of this part:
--any family of distribution detect some discart on normality of residuals
--any transformation or quadratic parameter solve the difficulties
 
 ```{r OXPHOS delta statistic}
 
@@ -1464,31 +1437,3 @@ ggplot(data = o2k_data_delta, aes(x = f_time, y =  RCR_delta))+
         legend.background = element_rect(fill = NA , colour = NA))
 
 ```
-
-# Discussion
-
-
-Global organism response :
-
-* conditions are stressful for the individuals
-* just a trend of differences between ecotypes
-  - maybe not the good age or the good time to see a difference
-  
-* the metabolic fluxes show no differences during the first 48h
-  - maybe the fact of putting 3 individuals by chamber introduce to much noise to have enough power
-  - need more replicates to validate the trends
-  - intertidal seem to have less need in oxygen consumption which could reveal a slower metabolism which could give advantage in stress condition 
-  
-telomeres length increase during the challenge
-
-* there is differences between the ecotypes: intertidal which are longer at the beginning
-  - the increase of the length can be attribute to the juvenile stage of the samples
-  - the difference at the beginnig can be relate to a front loading of telomerase which is induce later in the subtidal one
-  
-mitochondria: evolution of oxphos and leak parameter
-
-* no significant modification of the RCR at 36 during the challenge
-* decrease of leak and oxphos during the first week before an increase during the second week to reach a plateau at 21 days
-* the thermodynamic change significantly on the leak with a decrease in first week before an increase
-  - there is some modification on the membrane during the first week to reduce the leak due to the increase of the fluidity during the first week
-  - then due to the synthesis of better mitochondrial protein (increase of oxphos) the membrane fluidity is consider less important and permit to have the require energy
