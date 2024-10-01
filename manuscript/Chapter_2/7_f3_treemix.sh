@@ -5,19 +5,22 @@
 #PBS -l walltime=03:00:00
 #PBS -o /home1/datawork/agradel/demographic_chapter/98_log_files/treemix.log
 
-TREEMIX=". /appli/bioinfo/treemix/1.13/env.sh"
-PLINK="/appli/bioinfo/plink/1.9/plink"
-DIRECTORY=/home1/scratch/agradel/wall_genome_vcf
-INPUT=/home1/scratch/agradel/06_freebayes/concatenation
+TREEMIX=". /treemix/1.13/env.sh"
+STACK="./stack/env.sh"
+DIRECTORY=l/wall_genome_vcf
+INPUT=/concatenation
 OUTPUT=$SCRATCH/treemix
 TREERESULTS=$OUTPUT/chap_demo_tree
 
 mkdir -p $OUTPUT
+$STACK
+populations --in-vcf $INPUT/dadi_data_superclean_20240918.vcf --treemix -O ./ -M $INPUT/pop_map_dadi_data_superclean_20240918.txt
+gzip $INPUT/pop_map_dadi_data_superclean_20240918.txt
 #now we can do the analyses base on the files previously generated
 $TREEMIX
 
 ##F3 stats first
-#threepop -i $INPUT/dadi_data_superclean_20240918.p.treemix.gz -k 500
+threepop -i $INPUT/dadi_data_superclean_20240918.p.treemix.gz -k 500
 
 mkdir -p $TREERESULTS/migration_0
 treemix -i $INPUT/dadi_data_superclean_20240918.p.treemix.gz -k 1 -bootstrap -o $TREERESULTS/migration_0/treemix_results_replicate1
