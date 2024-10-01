@@ -2,14 +2,6 @@ library(lostruct)
 library(ggplot2)
 library(dartR)
 
-outliers <- function(x,z){
-  lims <- mean(x) + c(-1, 1) * z * sd(x)     # find loadings +/-z sd from mean loading     
-  x[x < lims[1] | x > lims[2]]               # locus names in these tails
-}
-
-outliers.lim <- function(x,z){
-  lims <- mean(x) + c(-1, 1) * z * sd(x)     # find loadings +/-z sd from mean loading
-}
 
 load("/home1/scratch/agradel/wall_genome_vcf/matrice_marq_gamb.RData") #attention il faut les transposer pour les rentrer dans lostruct
 
