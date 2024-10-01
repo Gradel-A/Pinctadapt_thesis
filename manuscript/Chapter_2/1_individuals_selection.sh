@@ -25,6 +25,6 @@ do
         echo "#PBS -o $DATADIRECTORY/98_log_files/0_1_ind_selection_${FILE##*/}.log" >> $SCRIPT/ind_selection_${FILE##*/}.sh ;
         echo "$BCFTOOLSENV" >> $SCRIPT/ind_selection_${FILE##*/}.sh;
         echo "cd $SCRATCH/wall_genome_vcf" >> $SCRIPT/ind_selection_${FILE##*/}.sh ;
-        echo "bcftools view -o ind_selected_${FILE##*/} -O z -S /home1/scratch/agradel/wall_genome_vcf/list_ind_selected_vcf.txt ${FILE}" >> $SCRIPT/ind_selection_${FILE##*/}.sh ;
+        echo "bcftools view -o ind_selected_${FILE##*/} -O z -S /wall_genome_vcf/list_ind_selected_vcf.txt ${FILE}" >> $SCRIPT/ind_selection_${FILE##*/}.sh ;
       #  qsub $SCRIPT/ind_selection_${FILE##*/}.sh ; # append the echoed line in the script file (here we ask to submit our script to the PBS claculation nodes for execution)
 done ; # we finish the loop 
